@@ -20,6 +20,7 @@ export default function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
 
+  // add a new todo item and clear text
   const addTodo = () => {
     const todosCopy = JSON.parse(JSON.stringify(todos));
     todosCopy.push(text);
@@ -29,11 +30,6 @@ export default function App() {
 
   // 3.1 Add a function to delete an item from todos given its
   // index
-  const deleteTodo = index => {
-    const todosCopy = JSON.parse(JSON.stringify(todos));
-    todosCopy.splice(index, 1);
-    setTodos(todosCopy);
-  }
 
   return (
       <SafeAreaView style={styles.container}>
@@ -49,33 +45,20 @@ export default function App() {
           // - renderItem: Use the included ToDo to render items
           // ToDo component is called like this <ToDo text={"Hello"}/>
           // - keyExtractor: Write a one-line function to take
-          // (item, index) in and returns index.toString()
+          // (item, index) in and returns `item + index.toString()`
 
         */}
-          <FlatList
-            data={todos}
-            renderItem={( { item, index } ) =>
-              <ToDo
-                id={index}
-                text={item}
-                onSelect={deleteTodo}
-                />
-             }
-             keyExtractor={(item, index) => {
-               return item + index.toString()
-            }}
-          />
         </View>
         <View style={{flexDirection: 'row'}}>
           <TextInput
             style={styles.textinput}
-            onChangeText={text => setText(text)} /*What method should be called here? */
-            value={text} /*What should be in place of the empty string? */
+            /* onChangeText={text => {}} // What method should be called here? */
+            /* value={''} //What should be in place of the empty string? */
           />
           <Button
             style={styles.button}
             title="Add"
-            onPress={addTodo} /*What should be called here? */
+            /* onPress={} //What should be called here? */
           />
         </View>
 
