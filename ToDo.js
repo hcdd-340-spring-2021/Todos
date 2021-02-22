@@ -14,7 +14,6 @@ import {
 export default function ToDo(props) {
   return (
     <TouchableOpacity
-      onPress={() => props.onSelect(props.id)}
       style={styles.container}>
       <Text>{props.text}</Text>
     </TouchableOpacity>

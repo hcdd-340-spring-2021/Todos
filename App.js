@@ -29,11 +29,6 @@ export default function App() {
 
   // 3.1 Add a function to delete an item from todos given its
   // index
-  const deleteTodo = index => {
-    const todosCopy = JSON.parse(JSON.stringify(todos));
-    todosCopy.splice(index, 1);
-    setTodos(todosCopy);
-  }
 
   return (
       <SafeAreaView style={styles.container}>
@@ -56,9 +51,7 @@ export default function App() {
             data={todos}
             renderItem={( { item, index } ) =>
               <ToDo
-                id={index}
                 text={item}
-                onSelect={deleteTodo}
                 />
              }
              keyExtractor={(item, index) => {
