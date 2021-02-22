@@ -25,7 +25,6 @@ export default function App() {
     const todosCopy = JSON.parse(JSON.stringify(todos));
     todosCopy.push(text);
     setTodos(todosCopy);
-    setText("");
   }
 
   // 3.1 Add a function to delete an item from todos given its
