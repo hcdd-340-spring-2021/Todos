@@ -17,13 +17,14 @@ export default function ToDo(props) {
       onPress={() => props.onSelect(props.id)}
       style={styles.container}>
       <Text>{props.text}</Text>
+      <Button style={styles.button} title="X" onPress={props.deleteToDo} />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 75,
+    height: 50,
     width: '100%',
     backgroundColor: 'lightblue',
     borderWidth: 1,

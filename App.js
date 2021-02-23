@@ -12,74 +12,56 @@ import {
 import ToDo from './ToDo.js'
 
 export default function App() {
-  // Here's what we will do step by step
-  // 1. Add the text value in the textInput to the list todos which is in our state
-  // 2. Render the FlatList!
-  // 3. Make Todo items deletable by clicking on them
+  // Make Todo items deletable by clicking on the button
 
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
 
   const addTodo = () => {
-    const todosCopy = JSON.parse(JSON.stringify(todos));
-    todosCopy.push(text);
-    setTodos(todosCopy);
+    setTodos([...todos, text]);
     setText("");
   }
 
-  // 3.1 Add a function to delete an item from todos given its
-  // index
-  const deleteTodo = index => {
-    const todosCopy = JSON.parse(JSON.stringify(todos));
-    todosCopy.splice(index, 1);
-    setTodos(todosCopy);
-  }
+  const deleteToDo = (index) => {
+    // In this case, the callback function doesn't need access to child component data
+    // Rather, an action in the child component will trigger a state update in the parent component
+    let newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
+  const renderToDo = ({ index, item }) => {
+    // ToDo component was imported from ToDo.js, shown in the import functions
+    // 1 - pass in deleteToDo function as a prop to the ToDo component
+    return <ToDo text={item} deleteToDo={() => deleteToDo(index)} />;
+  };
 
   return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.flatlist}>
-        {/*
+    <SafeAreaView style={styles.container}>
+      <View style={styles.flatlist}>
 
-          // 2. Here, you will render your FlatList. To help you do
-          // that, we have created a component for you to render the
-          // items. Additionally, here are the props you will pass to
-          // FlatList:
-          // - style: Make sure your list takes all the white space
-          // - data: What is the list of items we are trying to render?
-          // - renderItem: Use the included ToDo to render items
-          // ToDo component is called like this <ToDo text={"Hello"}/>
-          // - keyExtractor: Write a one-line function to take
-          // (item, index) in and returns index.toString()
+        <FlatList
+          data={todos}
+          renderItem={renderToDo}
+          keyExtractor={(item, index) => {
+            return item + index.toString()
+          }}
+        />
+      </View>
+      <View style={{ flexDirection: 'row' }}>
+        <TextInput
+          style={styles.textinput}
+          onChangeText={text => setText(text)} /*What method should be called here? */
+          value={text} /*What should be in place of the empty string? */
+        />
+        <Button
+          style={styles.button}
+          title="Add"
+          onPress={addTodo} /*What should be called here? */
+        />
+      </View>
 
-        */}
-          <FlatList
-            data={todos}
-            renderItem={( { item, index } ) =>
-              <ToDo
-                id={index}
-                text={item}
-                onSelect={deleteTodo}
-                />
-             }
-             keyExtractor={(item, index) => {
-               return item + index.toString()
-            }}
-          />
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <TextInput
-            style={styles.textinput}
-            onChangeText={text => setText(text)} /*What method should be called here? */
-            value={text} /*What should be in place of the empty string? */
-          />
-          <Button
-            style={styles.button}
-            title="Add"
-            onPress={addTodo} /*What should be called here? */
-          />
-        </View>
-
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 
