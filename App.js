@@ -22,9 +22,7 @@ export default function App() {
 
   // add a new todo item and clear text
   const addTodo = () => {
-    const todosCopy = JSON.parse(JSON.stringify(todos));
-    todosCopy.push(text);
-    setTodos(todosCopy);
+    setTodos([...todos, text]);
   }
 
   // 3.1 Add a function to delete an item from todos given its
