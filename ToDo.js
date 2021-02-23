@@ -17,7 +17,9 @@ export default function ToDo(props) {
       onPress={() => props.onSelect(props.id)}
       style={styles.container}>
       <Text>{props.text}</Text>
-      <Button style={styles.button} title="X" onPress={props.deleteToDo} />
+
+      {/* What should happen when onPress is called? */}
+      <Button style={styles.button} title="X" />
     </TouchableOpacity>
   );
 }

@@ -32,8 +32,7 @@ export default function App() {
 
   const renderToDo = ({ index, item }) => {
     // ToDo component was imported from ToDo.js, shown in the import functions
-    // 1 - pass in deleteToDo function as a prop to the ToDo component
-    return <ToDo text={item} deleteToDo={() => deleteToDo(index)} />;
+    // pass in deleteToDo function as a prop to the ToDo component
   };
 
   return (
