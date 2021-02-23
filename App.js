@@ -21,9 +21,8 @@ export default function App() {
   const [text, setText] = useState("");
 
   const addTodo = () => {
-    const todosCopy = JSON.parse(JSON.stringify(todos));
-    todosCopy.push(text);
-    setTodos(todosCopy);
+    // append the todos at the end
+    setTodos([...todos, text]);
     setText("");
   }
 
