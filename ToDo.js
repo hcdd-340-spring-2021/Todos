@@ -14,10 +14,9 @@ import {
 export default function ToDo(props) {
   return (
     <TouchableOpacity
-      onPress={() => props.onSelect(props.id)}
       style={styles.container}>
       <Text>{props.text}</Text>
-      <Button style={styles.button} title="X" onPress={props.deleteToDo} />
+      <Button title="X" onPress={props.deleteToDo} />
     </TouchableOpacity>
   );
 }
@@ -30,6 +29,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    margin: 5,
   }
 });

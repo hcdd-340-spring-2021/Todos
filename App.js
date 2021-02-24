@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   flatlist: {
-    flex: 1
+    flex: 1,
+    width: '100%'
   },
   textinput: {
     height: 40,
