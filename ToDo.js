@@ -8,16 +8,14 @@ import {
   Alert
 } from 'react-native';
 
-// 3.2 Make your todos clickable such that they call the
-// delete function in parent when pressed
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 
 export default function ToDo(props) {
   return (
-    <TouchableOpacity
-      style={styles.container}>
+    <GestureRecognizer onSwipeRight={props.deleteToDo} style={styles.container}>
       <Text>{props.text}</Text>
-      <Button title="X" onPress={props.deleteToDo} />
-    </TouchableOpacity>
+    </GestureRecognizer>
   );
 }
 
