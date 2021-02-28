@@ -9,13 +9,27 @@ import {
   SafeAreaView,
   FlatList
 } from 'react-native';
+
+import { useFonts } from 'expo-font';
 import ToDo from './ToDo.js'
 
 export default function App() {
+
   // Make Todo items deletable by clicking on the button
 
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
+
+  const [loaded, error] = useFonts({ 
+    Montserrat: require('./Montserrat.ttf')
+  });
+
+  // trying to render is futile if the font is not loaded
+  if (!loaded){
+    return null;
+  }
+
+
 
   const addTodo = () => {
     setTodos([...todos, text]);
@@ -38,6 +52,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>To-Do List</Text>
       <View style={styles.flatlist}>
 
         <FlatList
@@ -81,6 +96,10 @@ const styles = StyleSheet.create({
     width: '80%',
     borderColor: 'gray',
     borderWidth: 1
+  },
+  title: {
+    fontSize: 30,
+    fontFamily: 'Montserrat',
   },
   button: {
     height: 40,
