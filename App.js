@@ -43,23 +43,24 @@ export default function App() {
     }
   }
 
+  /* What should the callback function and dependency values here?
   useEffect(() => {
-    readTodos();
-  }, [])
+  })
+  */
 
+  // store todos
   const addTodo = () => {
     const newTodos = [...todos, text];
-    storeTodos(newTodos);
     setTodos(newTodos);
     setText("");
   }
 
+  // update todos
   const deleteToDo = (index) => {
     // In this case, the callback function doesn't need access to child component data
     // Rather, an action in the child component will trigger a state update in the parent component
     let newTodos = [...todos];
     newTodos.splice(index, 1);
-    storeTodos(newTodos);
     setTodos(newTodos);
   };
 
@@ -93,13 +94,13 @@ export default function App() {
       <View style={{ flexDirection: 'row' }}>
         <TextInput
           style={styles.textinput}
-          onChangeText={text => setText(text)} /*What method should be called here? */
-          value={text} /*What should be in place of the empty string? */
+          onChangeText={text => setText(text)}
+          value={text}
         />
         <Button
           style={styles.button}
           title="Add"
-          onPress={addTodo} /*What should be called here? */
+          onPress={addTodo}
         />
       </View>
 
