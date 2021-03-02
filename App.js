@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,27 +12,45 @@ import {
 
 import { useFonts } from 'expo-font';
 import ToDo from './ToDo.js'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
-
-  // Make Todo items deletable by clicking on the button
 
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
 
-  const [loaded, error] = useFonts({ 
-    Montserrat: require('./Montserrat.ttf')
-  });
 
-  // trying to render is futile if the font is not loaded
-  if (!loaded){
-    return null;
+  const setTodosFromStorage = (todos_string) => {
+    setTodos(JSON.parse(todos_string));
   }
 
+  const storeTodos = async (newValue) => {
+    try {
+      await AsyncStorage.setItem('todos', JSON.stringify(newValue))
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
+  const readTodos = async () => {
+    try {
+      const storage_todos = await AsyncStorage.getItem('todos');
+      if (storage_todos !== null) {
+        setTodosFromStorage(storage_todos);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    readTodos();
+  }, [])
 
   const addTodo = () => {
-    setTodos([...todos, text]);
+    const newTodos = [...todos, text];
+    storeTodos(newTodos);
+    setTodos(newTodos);
     setText("");
   }
 
@@ -41,6 +59,7 @@ export default function App() {
     // Rather, an action in the child component will trigger a state update in the parent component
     let newTodos = [...todos];
     newTodos.splice(index, 1);
+    storeTodos(newTodos);
     setTodos(newTodos);
   };
 
@@ -49,6 +68,14 @@ export default function App() {
     // 1 - pass in deleteToDo function as a prop to the ToDo component
     return <ToDo text={item} deleteToDo={() => deleteToDo(index)} />;
   };
+
+  const [loaded] = useFonts({
+    Montserrat: require('./Montserrat.ttf')
+  });
+
+  if (!loaded) {
+    return null
+  }
 
   return (
     <SafeAreaView style={styles.container}>
